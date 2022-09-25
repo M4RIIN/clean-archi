@@ -1,0 +1,6 @@
+.manual-config-module:
+  variables:
+    MODULE: "manual-config"
+  only:
+    changes:
+      - "manual-config/**/*"

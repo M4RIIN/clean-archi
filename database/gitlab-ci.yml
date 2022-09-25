@@ -1,0 +1,6 @@
+.database-module:
+  variables:
+    MODULE: "database"
+  only:
+    changes:
+      - "database/**/*"

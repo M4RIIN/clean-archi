@@ -1,0 +1,81 @@
+image: maven:3-jdk-8
+
+stages:
+  - build
+  - test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  CACHE_KEY: $CI_COMMIT_REF_SLUG
+
+
+cache:
+  key: $CACHE_KEY
+  paths:
+    - .m2/repository
+    - .sbt
+
+include:
+  - local: consoleApp/console-app/.gitlab-ci.yml
+  - local: consoleApp/manual-config/.gitlab-ci.yml
+  - local: core/domain/.gitlab-ci.yml
+  - local: database/.gitlab-ci.yml
+
+
+.test-module:
+  stage: test
+  script:
+    - echo "Testing $MODULE"
+    - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
+
+.build-module:
+  stage: build
+  script:
+    - echo "Building $MODULE"
+    - mvn -pl $MODULE clean compile --also-make
+  artifacts:
+    expire_in: 10 min
+    paths:
+      - "*/target"
+
+# BUILD JOBS
+build-console-app-module:
+  extends:
+    - .console-app-module
+    - .build-module
+
+build-manual-config-module:
+  extends:
+    - .manual-config-module
+    - .build-module
+
+build-domain-module:
+  extends:
+    - .domain-module
+    - .build-module
+
+build-database-module:
+  extends:
+    - .database-module
+    - .build-module
+
+# TEST JOBS
+test-console-app-module:
+  extends:
+    - .console-app-module
+    - .test-module
+
+test-manual-config-module:
+  extends:
+    - .manual-config-module
+    - .test-module
+
+test-domain-module:
+  extends:
+    - .domain-module
+    - .test-module
+test-database-module:
+  extends:
+    - .database-module
+    - .test-module
