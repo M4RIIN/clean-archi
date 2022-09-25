@@ -17,10 +17,10 @@ cache:
     - .sbt
 
 include:
-  - local: consoleApp/console-app/.gitlab-ci.yml
-  - local: consoleApp/manual-config/.gitlab-ci.yml
   - local: core/domain/.gitlab-ci.yml
   - local: database/.gitlab-ci.yml
+  - local: consoleApp/manual-config/.gitlab-ci.yml
+  - local: consoleApp/console-app/.gitlab-ci.yml
 
 
 .test-module:
