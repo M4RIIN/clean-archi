@@ -1,6 +1,0 @@
-.console-app-module:
-  variables:
-    MODULE: "console-app"
-  only:
-    changes:
-      - "console-app/**/*"

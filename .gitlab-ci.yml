@@ -1,81 +1,34 @@
-image: maven:3-jdk-8
-
 stages:
-  - build
-  - test
+  - trigger-modules
 
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
-  CACHE_KEY: $CI_COMMIT_REF_SLUG
+trigger module 1/4:
+  stage: trigger-modules
+  trigger:
+    include: consoleApp/console-app/gitlab-ci.yml
+  only:
+    changes:
+      - consoleApp/console-app/*
 
+trigger module 2/4:
+  stage: trigger-modules
+  trigger:
+    include: consoleApp/manual-config/gitlab-ci.yml
+  only:
+    changes:
+      - consoleApp/manual-config/*
 
-cache:
-  key: $CACHE_KEY
-  paths:
-    - .m2/repository
-    - .sbt
+trigger module 3/4:
+  stage: trigger-modules
+  trigger:
+    include: core/domain/gitlab-ci.yml
+  only:
+    changes:
+      - core/domain/*
 
-include:
-  - local: core/domain/.gitlab-ci.yml
-  - local: database/.gitlab-ci.yml
-  - local: consoleApp/manual-config/.gitlab-ci.yml
-  - local: consoleApp/console-app/.gitlab-ci.yml
-
-
-.test-module:
-  stage: test
-  script:
-    - echo "Testing $MODULE"
-    - mvn $MAVEN_CLI_OPTS -pl $MODULE test --also-make
-
-.build-module:
-  stage: build
-  script:
-    - echo "Building $MODULE"
-    - mvn -pl $MODULE clean compile --also-make
-  artifacts:
-    expire_in: 10 min
-    paths:
-      - "*/target"
-
-# BUILD JOBS
-build-console-app-module:
-  extends:
-    - .console-app-module
-    - .build-module
-
-build-manual-config-module:
-  extends:
-    - .manual-config-module
-    - .build-module
-
-build-domain-module:
-  extends:
-    - .domain-module
-    - .build-module
-
-build-database-module:
-  extends:
-    - .database-module
-    - .build-module
-
-# TEST JOBS
-test-console-app-module:
-  extends:
-    - .console-app-module
-    - .test-module
-
-test-manual-config-module:
-  extends:
-    - .manual-config-module
-    - .test-module
-
-test-domain-module:
-  extends:
-    - .domain-module
-    - .test-module
-test-database-module:
-  extends:
-    - .database-module
-    - .test-module
+trigger module 4/4:
+  stage: trigger-modules
+  trigger:
+    include: database/gitlab-ci.yml
+  only:
+    changes:
+      - database/*

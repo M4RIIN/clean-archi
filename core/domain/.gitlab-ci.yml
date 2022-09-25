@@ -1,6 +1,0 @@
-.domain-module:
-  variables:
-    MODULE: "domain"
-  only:
-    changes:
-      - "domain/**/*"
