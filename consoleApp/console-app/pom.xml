@@ -49,6 +49,7 @@
                         <descriptorRefs>
                             <descriptorRef>jar-with-dependencies</descriptorRef>
                         </descriptorRefs>
+                        <outputDirectory>../../target/</outputDirectory>
                         <archive>
                             <manifest>
                                 <mainClass>com.lagrange.ApplicationConsole</mainClass>
