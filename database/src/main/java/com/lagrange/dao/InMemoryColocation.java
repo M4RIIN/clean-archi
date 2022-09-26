@@ -4,8 +4,10 @@ import com.lagrange.model.ColocationData;
 import com.lagrange.usecase.model.user.colocation.Colocation;
 import com.lagrange.usecase.repository.colocation.ColocationRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryColocation implements ColocationRepository {
 
@@ -24,6 +26,6 @@ public class InMemoryColocation implements ColocationRepository {
 
     @Override
     public List<Colocation> listAll() {
-        return inMemoryTableColocation.values().stream().toList();
+        return new ArrayList<>(inMemoryTableColocation.values());
     }
 }
