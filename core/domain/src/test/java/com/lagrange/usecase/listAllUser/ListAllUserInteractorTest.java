@@ -2,13 +2,15 @@ package com.lagrange.usecase.listAllUser;
 
 import com.lagrange.stub.InMemoryDatabase;
 import com.lagrange.usecase.model.user.UserDto;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-class ListAllUserInteractorTest {
+
+public class ListAllUserInteractorTest {
 
     @Test
     public void returnAllSavedUser(){

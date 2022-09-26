@@ -1,10 +1,12 @@
 package com.lagrange.entity;
 
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 
-class UserEntityTest {
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+public class UserEntityTest {
 
     @Test
     public void passwordNullIsNotValid(){

@@ -7,19 +7,19 @@ import com.lagrange.usecase.exception.createUser.CreateUserException;
 import com.lagrange.usecase.exception.createUser.PasswordInvalidException;
 import com.lagrange.usecase.exception.createUser.UserAlreadyExsit;
 import com.lagrange.usecase.model.user.UserDto;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
-class CreateUserInteractorTest {
+
+public class CreateUserInteractorTest {
 
     @Test
     public void whenMyUserHavePassword123ShouldRaiseException(){
         CreateUserInteractor createUserInteractor = new CreateUserInteractor(new InMemoryDatabase());
         assertThrows(PasswordInvalidException.class, ()->{
-         UserDto userDto=  createUserInteractor.create("ok","123");
-         assertEquals("",userDto.getPassword());
-         assertEquals("",userDto.getPseudo());
+            createUserInteractor.create("ok","123");
         }) ;
     }
 
