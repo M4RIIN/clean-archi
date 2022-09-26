@@ -1,7 +1,7 @@
 package com.lagrange.model;
 
-import com.lagrange.usecase.model.user.User;
-import com.lagrange.usecase.model.user.UserDto;
+
+import com.lagrange.entity.User;
 
 public class UserData {
     private int id;
@@ -14,7 +14,7 @@ public class UserData {
         this.password = password;
     }
 
-    public UserDto toDto(){
+    public User toDto(){
         return new User(pseudo,password);
     }
 

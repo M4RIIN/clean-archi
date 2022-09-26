@@ -1,12 +1,12 @@
-package com.lagrange.usecase;
+package com.lagrange.usecase.createUser;
 
+import com.lagrange.entity.User;
 import com.lagrange.stub.InMemoryDatabase;
 import com.lagrange.stub.InMemoryDatabaseWithUserAlreadyExisting;
-import com.lagrange.usecase.createUser.CreateUserInteractor;
+import com.lagrange.usecase.user.createUser.CreateUserInteractor;
 import com.lagrange.usecase.exception.createUser.CreateUserException;
 import com.lagrange.usecase.exception.createUser.PasswordInvalidException;
 import com.lagrange.usecase.exception.createUser.UserAlreadyExsit;
-import com.lagrange.usecase.model.user.UserDto;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -45,11 +45,11 @@ public class CreateUserInteractorTest {
         CreateUserInteractor createUserInteractor = new CreateUserInteractor(createUserRepository);
         String marin = "marin";
         String password = "marin123456";
-        UserDto userDto = createUserInteractor.create(marin, password);
+        User userDto = createUserInteractor.create(marin, password);
         assertEquals(password,userDto.getPassword());
         assertEquals(marin,userDto.getPseudo());
-        assertEquals(marin,createUserRepository.userDtoList.get(0).getPseudo());
-        assertEquals(password,createUserRepository.userDtoList.get(0).getPassword());
+        assertEquals(marin,createUserRepository.userDtoList.get(1).getPseudo());
+        assertEquals(password,createUserRepository.userDtoList.get(1).getPassword());
     }
 }
 

@@ -1,4 +1,4 @@
-package com.lagrange.dao;
+package com.lagrange.stub.colocation;
 
 import com.lagrange.entity.Colocation;
 import com.lagrange.usecase.repository.colocation.ColocationRepository;
@@ -6,11 +6,16 @@ import com.lagrange.usecase.repository.colocation.ColocationRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
-public class InMemoryColocation implements ColocationRepository {
+public class InMemoryColocationDbMock implements ColocationRepository {
 
     private HashMap<String, Colocation> inMemoryTableColocation = new HashMap<>();
+
+    public InMemoryColocationDbMock() {
+        this.inMemoryTableColocation = inMemoryTableColocation;
+        populate();
+    }
 
     @Override
     public Colocation save(Colocation colocation) {
@@ -31,6 +36,9 @@ public class InMemoryColocation implements ColocationRepository {
     @Override
     public Colocation getColocationByPseudoAndPassword(String tag, String password) {
         Colocation firstFind = inMemoryTableColocation.get(tag);
+        if(Objects.isNull(firstFind)){
+            return null;
+        }
         if(firstFind.getPassword().equals(password)){
             return firstFind;
         }else return null;
@@ -39,5 +47,9 @@ public class InMemoryColocation implements ColocationRepository {
     @Override
     public void updateColocation(Colocation colocationJoined) {
         this.inMemoryTableColocation.replace(colocationJoined.getTag(), colocationJoined);
+    }
+
+    private void populate(){
+        this.inMemoryTableColocation.put("1234",new Colocation("valide","valide","1234"));
     }
 }

@@ -1,7 +1,8 @@
 package com.lagrange.usecase.listAllUser;
 
+import com.lagrange.entity.User;
 import com.lagrange.stub.InMemoryDatabase;
-import com.lagrange.usecase.model.user.UserDto;
+import com.lagrange.usecase.user.listAllUser.ListAllUserInteractor;
 import org.junit.Test;
 
 
@@ -18,7 +19,7 @@ public class ListAllUserInteractorTest {
 
         ListAllUserInteractor listAllUserInteractor = new ListAllUserInteractor(inMemoryDatabase);
 
-        List<UserDto> userDtoList = listAllUserInteractor.listAll();
+        List<User> userDtoList = listAllUserInteractor.listAll();
 
         assertEquals(userDtoList.size(),inMemoryDatabase
                 .userDtoList.size());

@@ -1,10 +1,8 @@
-package com.lagrange.usecase.createColocation;
+package com.lagrange.usecase.colocation.createColocation;
 
-import com.lagrange.entity.ColocationEntity;
+import com.lagrange.entity.Colocation;
 import com.lagrange.usecase.exception.colocation.PasswordColocationInvalidException;
 import com.lagrange.usecase.exception.colocation.TagAlreadyExistException;
-import com.lagrange.usecase.exception.createUser.PasswordInvalidException;
-import com.lagrange.usecase.model.user.colocation.Colocation;
 import com.lagrange.usecase.repository.colocation.ColocationRepository;
 
 public class CreateColocationInteractor implements CreateColocationBoundary {
@@ -27,8 +25,8 @@ public class CreateColocationInteractor implements CreateColocationBoundary {
     }
 
     private static void checkPasswordIsValid(String nom, String password, String tag) throws PasswordColocationInvalidException {
-        ColocationEntity colocationEntity = new ColocationEntity(nom, password, tag);
-        if(!colocationEntity.isPasswordValid()){
+        Colocation colocation = new Colocation(nom, password, tag);
+        if(!colocation.isPasswordValid()){
             throw new PasswordColocationInvalidException();
         }
     }

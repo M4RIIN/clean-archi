@@ -1,18 +1,18 @@
-package com.lagrange.usecase.model.user.colocation;
+package com.lagrange.entity;
 
-public class Colocation {
+import java.util.Objects;
+
+public class User {
     private String pseudo;
     private String password;
 
-    public String getTag() {
-        return tag;
-    }
-
-    private String tag;
-    public Colocation(String pseudo, String password, String tag) {
+    public User(String pseudo, String password) {
         this.pseudo = pseudo;
         this.password = password;
-        this.tag = tag;
+    }
+
+    public boolean isPasswordValid(){
+        return !Objects.isNull(password) && password.length() >= 5;
     }
 
     public String getPseudo() {

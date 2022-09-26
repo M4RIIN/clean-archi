@@ -1,9 +1,13 @@
 package com.lagrange;
 
 
-import com.lagrange.usecase.model.user.UserDto;
-import com.lagrange.usecase.model.user.colocation.Colocation;
+import com.lagrange.entity.Colocation;
+import com.lagrange.entity.User;
+import com.lagrange.usecase.colocation.joinColocation.ColocationCredentials;
+import com.lagrange.usecase.exception.colocation.ColocationNotFoundException;
+import com.lagrange.usecase.user.createUser.UserCredential;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ApplicationConsole {
@@ -15,6 +19,7 @@ public class ApplicationConsole {
             System.out.println("LU - List user ");
             System.out.println("CC - Create colocation ");
             System.out.println("LC - List Colocation ");
+            System.out.println("JC - Join Colocation");
 
             String entreeUser = scanner.nextLine();
             switch (entreeUser){
@@ -34,6 +39,11 @@ public class ApplicationConsole {
                 case "LC":
                     displayAllColocation();
                     break;
+                case "JC":
+                    System.out.println("<pseudo>;<userPassword>;<colocationTag>;<colocationPassword>");
+                    String troisiemeEntreeColoc = scanner.nextLine();
+                    makeUserJoinColoc(troisiemeEntreeColoc);
+                    break;
                 default:
                     System.out.println("Commande inconnue.");
                     break;
@@ -41,8 +51,20 @@ public class ApplicationConsole {
         }
     }
 
+    private static void makeUserJoinColoc(String troisiemeEntreeColoc)  {
+        String[] entries = troisiemeEntreeColoc.split(";");
+        try {
+            Configuration.getConfiguration().colocationJoinBoundary.addUserToColocation(
+                    new UserCredential(entries[0],entries[1]),
+                    new ColocationCredentials(entries[2],entries[3])
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void displayAllUser() {
-        for(UserDto userDto : Configuration.getConfiguration().listAllUserService.listAll()){
+        for(User userDto : Configuration.getConfiguration().listAllUserService.listAll()){
             System.out.println(userDto.getPseudo() + " - " + userDto.getPassword());
         }
     }

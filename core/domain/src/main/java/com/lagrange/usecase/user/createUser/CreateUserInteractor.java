@@ -1,11 +1,10 @@
-package com.lagrange.usecase.createUser;
+package com.lagrange.usecase.user.createUser;
 
-import com.lagrange.entity.UserEntity;
+import com.lagrange.entity.User;
 import com.lagrange.usecase.exception.createUser.CreateUserException;
 import com.lagrange.usecase.exception.createUser.PasswordInvalidException;
 import com.lagrange.usecase.exception.createUser.UserAlreadyExsit;
-import com.lagrange.usecase.model.user.User;
-import com.lagrange.usecase.model.user.UserDto;
+
 import com.lagrange.usecase.repository.User.UserRepository;
 
 public class CreateUserInteractor implements CreateUserService {
@@ -17,9 +16,9 @@ public class CreateUserInteractor implements CreateUserService {
     }
 
     @Override
-    public UserDto create(String pseudo, String password) throws CreateUserException {
+    public User create(String pseudo, String password) throws CreateUserException {
         checkValidityOfRequest(pseudo, password);
-        UserDto userDto = new User(pseudo,password);
+        User userDto = new User(pseudo,password);
         userRepository.save(userDto);
         return userDto;
     }
@@ -30,8 +29,8 @@ public class CreateUserInteractor implements CreateUserService {
     }
 
     private static void checkIfPasswordIsValid(String pseudo, String password) throws PasswordInvalidException {
-        UserEntity userEntity = new UserEntity(pseudo, password);
-        if(!userEntity.isPasswordValid()){
+        User user = new User(pseudo, password);
+        if(!user.isPasswordValid()){
             throw new PasswordInvalidException();
         }
     }

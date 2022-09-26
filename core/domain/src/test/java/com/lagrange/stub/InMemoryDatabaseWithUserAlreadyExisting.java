@@ -1,14 +1,15 @@
 package com.lagrange.stub;
 
-import com.lagrange.usecase.model.user.UserDto;
+import com.lagrange.entity.User;
 import com.lagrange.usecase.repository.User.UserRepository;
+import com.lagrange.usecase.user.createUser.UserCredential;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryDatabaseWithUserAlreadyExisting implements UserRepository {
 
-    List<UserDto> userDtoList = new ArrayList<>();
+    List<User> userDtoList = new ArrayList<>();
 
     @Override
     public boolean exist(String pseudo) {
@@ -16,12 +17,17 @@ public class InMemoryDatabaseWithUserAlreadyExisting implements UserRepository {
     }
 
     @Override
-    public void save(UserDto userToSave) {
+    public void save(User userToSave) {
         userDtoList.add(userToSave);
     }
 
     @Override
-    public List<UserDto> listAll() {
+    public List<User> listAll() {
         return userDtoList;
+    }
+
+    @Override
+    public User getUserByPseudoAndPassword(UserCredential user) {
+        return null;
     }
 }

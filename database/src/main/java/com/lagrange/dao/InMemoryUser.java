@@ -1,7 +1,8 @@
 package com.lagrange.dao;
 
+import com.lagrange.entity.User;
 import com.lagrange.model.UserData;
-import com.lagrange.usecase.model.user.UserDto;
+import com.lagrange.usecase.user.createUser.UserCredential;
 import com.lagrange.usecase.repository.User.UserRepository;
 
 import java.util.HashMap;
@@ -21,16 +22,26 @@ public class InMemoryUser implements UserRepository {
     }
 
     @Override
-    public void save(UserDto userToSave) {
+    public void save(User userToSave) {
         UserData userData = new UserData(keyMax,userToSave.getPseudo(), userToSave.getPassword());
         inMemoryDb.put(keyMax,userData);
         keyMax++;
     }
 
     @Override
-    public List<UserDto> listAll() {
+    public List<User> listAll() {
         return inMemoryDb.values().stream()
                 .map(UserData::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public User getUserByPseudoAndPassword(UserCredential user) {
+      return  inMemoryDb.values()
+                .stream()
+                .filter(u -> u.getPseudo().equals(user.getUsername()) && u.getPassword().equals(user.getPassword()))
+                .map(UserData::toDto)
+                .findFirst()
+                .orElse(null);
     }
 }

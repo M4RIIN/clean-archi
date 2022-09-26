@@ -1,6 +1,7 @@
-package com.lagrange.usecase.listAllUser;
+package com.lagrange.usecase.user.listAllUser;
 
-import com.lagrange.usecase.model.user.UserDto;
+
+import com.lagrange.entity.User;
 import com.lagrange.usecase.repository.User.UserRepository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class ListAllUserInteractor implements ListAllUserService {
     }
 
     @Override
-    public List<UserDto> listAll() {
+    public List<User> listAll() {
         return userRepository.listAll();
     }
 }
