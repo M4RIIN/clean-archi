@@ -1,18 +1,35 @@
 package com.lagrange;
 
-
 import com.lagrange.entity.Colocation;
 import com.lagrange.entity.User;
+import com.lagrange.usecase.colocation.createColocation.CreateColocationBoundary;
 import com.lagrange.usecase.colocation.joinColocation.ColocationCredentials;
-import com.lagrange.usecase.exception.colocation.ColocationNotFoundException;
+import com.lagrange.usecase.colocation.joinColocation.ColocationJoinBoundary;
+import com.lagrange.usecase.colocation.listAllColocation.ListAllColocationBoundary;
+import com.lagrange.usecase.user.createUser.CreateUserService;
 import com.lagrange.usecase.user.createUser.UserCredential;
+import com.lagrange.usecase.user.listAllUser.ListAllUserService;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class ApplicationConsole {
-    public static void main(String[] args) {
-        Configuration configuration = Configuration.getConfiguration();
+
+    private final ColocationJoinBoundary colocationJoinBoundary;
+    private final ListAllUserService listAllUserService;
+    private final ListAllColocationBoundary listAllColocationBoundary;
+    private final CreateColocationBoundary createColocationBoundary;
+    private final CreateUserService createUserService;
+
+    public ApplicationConsole(ColocationJoinBoundary colocationJoinBoundary, ListAllUserService listAllUserService, ListAllColocationBoundary listAllColocationBoundary, CreateColocationBoundary createColocationBoundary, CreateUserService createUserService) {
+        this.colocationJoinBoundary = colocationJoinBoundary;
+        this.listAllUserService = listAllUserService;
+        this.listAllColocationBoundary = listAllColocationBoundary;
+        this.createColocationBoundary = createColocationBoundary;
+        this.createUserService = createUserService;
+    }
+
+    public void start(){
+        //Configuration configuration = Configuration.getConfiguration();
         Scanner scanner = new Scanner(System.in);
         while(true){
             System.out.println("CU - Create user");
@@ -51,10 +68,10 @@ public class ApplicationConsole {
         }
     }
 
-    private static void makeUserJoinColoc(String troisiemeEntreeColoc)  {
+    private void makeUserJoinColoc(String troisiemeEntreeColoc)  {
         String[] entries = troisiemeEntreeColoc.split(";");
         try {
-            Configuration.getConfiguration().colocationJoinBoundary.addUserToColocation(
+           colocationJoinBoundary.addUserToColocation(
                     new UserCredential(entries[0],entries[1]),
                     new ColocationCredentials(entries[2],entries[3])
             );
@@ -63,22 +80,22 @@ public class ApplicationConsole {
         }
     }
 
-    private static void displayAllUser() {
-        for(User userDto : Configuration.getConfiguration().listAllUserService.listAll()){
+    private  void displayAllUser() {
+        for(User userDto : listAllUserService.listAll()){
             System.out.println(userDto.getPseudo() + " - " + userDto.getPassword());
         }
     }
 
-    private static void displayAllColocation() {
-        for(Colocation coloc : Configuration.getConfiguration().listAllColocationBoundary.listAll()){
+    private  void displayAllColocation() {
+        for(Colocation coloc : listAllColocationBoundary.listAll()){
             System.out.println(coloc.getPseudo() + " - " + coloc.getPassword() + " - #" + coloc.getTag());
         }
     }
 
-    private static void insertColocation(String name, String pwd, String tag) {
+    private  void insertColocation(String name, String pwd, String tag) {
         Colocation colocation = new Colocation(name, pwd, tag);
         try {
-            Configuration.getConfiguration().createColocationBoundary.create(colocation.getPseudo(), colocation.getPassword(), colocation.getTag());
+            createColocationBoundary.create(colocation.getPseudo(), colocation.getPassword(), colocation.getTag());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,9 +103,9 @@ public class ApplicationConsole {
 
     }
 
-    private static void insertUser(String password, String pseudo) {
+    private  void insertUser(String password, String pseudo) {
         try {
-            Configuration.getConfiguration().createUserService.create(pseudo, password);
+            createUserService.create(pseudo, password);
 
         } catch (Exception e) {
             e.printStackTrace();
