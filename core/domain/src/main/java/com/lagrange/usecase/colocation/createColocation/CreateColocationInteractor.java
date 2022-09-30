@@ -5,7 +5,7 @@ import com.lagrange.usecase.exception.colocation.PasswordColocationInvalidExcept
 import com.lagrange.usecase.exception.colocation.TagAlreadyExistException;
 import com.lagrange.usecase.repository.colocation.ColocationRepository;
 
-public class CreateColocationInteractor implements CreateColocationBoundary {
+public class CreateColocationInteractor implements CreateColocationService {
     private final ColocationRepository colocationRepository;
 
     public CreateColocationInteractor(ColocationRepository colocationRepository) {

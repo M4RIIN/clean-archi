@@ -30,4 +30,9 @@ public class InMemoryDatabaseWithUserAlreadyExisting implements UserRepository {
     public User getUserByPseudoAndPassword(UserCredential user) {
         return null;
     }
+
+    @Override
+    public void update(User user) {
+
+    }
 }

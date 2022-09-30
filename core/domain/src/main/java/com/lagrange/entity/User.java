@@ -5,10 +5,16 @@ import java.util.Objects;
 public class User {
     private String pseudo;
     private String password;
+    private String colocationTag;
 
     public User(String pseudo, String password) {
         this.pseudo = pseudo;
         this.password = password;
+        this.colocationTag = "";
+    }
+
+    public void joinColocation(String tag){
+        this.colocationTag = tag;
     }
 
     public boolean isPasswordValid(){
@@ -21,5 +27,9 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getColocationTag() {
+        return colocationTag;
     }
 }

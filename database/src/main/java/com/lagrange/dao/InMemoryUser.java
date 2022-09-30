@@ -2,6 +2,7 @@ package com.lagrange.dao;
 
 import com.lagrange.entity.User;
 import com.lagrange.model.UserData;
+import com.lagrange.usecase.exception.createUser.UserDontFindException;
 import com.lagrange.usecase.user.createUser.UserCredential;
 import com.lagrange.usecase.repository.User.UserRepository;
 
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class InMemoryUser implements UserRepository {
 
-    private HashMap<Integer, UserData> inMemoryDb = new HashMap<>();
+    private HashMap<String, UserData> inMemoryDb = new HashMap<>();
 
     private int keyMax = 0;
     @Override
@@ -23,9 +24,8 @@ public class InMemoryUser implements UserRepository {
 
     @Override
     public void save(User userToSave) {
-        UserData userData = new UserData(keyMax,userToSave.getPseudo(), userToSave.getPassword());
-        inMemoryDb.put(keyMax,userData);
-        keyMax++;
+        UserData userData = new UserData(userToSave.getPseudo(), userToSave.getPseudo(), userToSave.getPassword());
+        inMemoryDb.put(userData.getPseudo(),userData);
     }
 
     @Override
@@ -36,12 +36,18 @@ public class InMemoryUser implements UserRepository {
     }
 
     @Override
-    public User getUserByPseudoAndPassword(UserCredential user) {
+    public User getUserByPseudoAndPassword(UserCredential user) throws UserDontFindException {
       return  inMemoryDb.values()
                 .stream()
                 .filter(u -> u.getPseudo().equals(user.getUsername()) && u.getPassword().equals(user.getPassword()))
                 .map(UserData::toDto)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(UserDontFindException::new);
+    }
+
+    @Override
+    public void update(User user) {
+        UserData data = new UserData(user.getPseudo(), user.getPassword(), user.getColocationTag());
+        this.inMemoryDb.replace(user.getPseudo(), data);
     }
 }

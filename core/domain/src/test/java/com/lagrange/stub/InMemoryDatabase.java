@@ -40,6 +40,11 @@ public class InMemoryDatabase implements UserRepository {
                 .orElse(null);
     }
 
+    @Override
+    public void update(User user) {
+
+    }
+
     public void populate(){
         this.userDtoList.add(
                 new User("valid","valid")

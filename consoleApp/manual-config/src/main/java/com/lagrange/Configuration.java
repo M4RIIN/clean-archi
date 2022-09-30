@@ -3,13 +3,13 @@ package com.lagrange;
 
 import com.lagrange.dao.InMemoryColocation;
 import com.lagrange.dao.InMemoryUser;
-import com.lagrange.usecase.colocation.createColocation.CreateColocationBoundary;
+import com.lagrange.usecase.colocation.createColocation.CreateColocationService;
 import com.lagrange.usecase.colocation.createColocation.CreateColocationInteractor;
 import com.lagrange.usecase.user.createUser.CreateUserInteractor;
 import com.lagrange.usecase.user.createUser.CreateUserService;
-import com.lagrange.usecase.colocation.joinColocation.ColocationJoinBoundary;
+import com.lagrange.usecase.colocation.joinColocation.ColocationJoinService;
 import com.lagrange.usecase.colocation.joinColocation.ColocationJoinInteractor;
-import com.lagrange.usecase.colocation.listAllColocation.ListAllColocationBoundary;
+import com.lagrange.usecase.colocation.listAllColocation.ListAllColocationService;
 import com.lagrange.usecase.colocation.listAllColocation.ListAllColocationInteractor;
 import com.lagrange.usecase.user.listAllUser.ListAllUserInteractor;
 import com.lagrange.usecase.user.listAllUser.ListAllUserService;
@@ -27,11 +27,11 @@ public class Configuration {
 
     private ColocationRepository colocationRepository;
 
-    public ListAllColocationBoundary listAllColocationBoundary;
+    public ListAllColocationService listAllColocationService;
 
-    public CreateColocationBoundary createColocationBoundary;
+    public CreateColocationService createColocationService;
 
-    public ColocationJoinBoundary colocationJoinBoundary;
+    public ColocationJoinService colocationJoinService;
 
     private Configuration() {
         userRepository();
@@ -62,9 +62,9 @@ public class Configuration {
 
     private void createColocationService(){
         this.colocationRepository = new InMemoryColocation();
-        this.createColocationBoundary = new CreateColocationInteractor(colocationRepository);
-        this.listAllColocationBoundary = new ListAllColocationInteractor(colocationRepository);
-        this.colocationJoinBoundary = new ColocationJoinInteractor(colocationRepository, userRepository);
+        this.createColocationService = new CreateColocationInteractor(colocationRepository);
+        this.listAllColocationService = new ListAllColocationInteractor(colocationRepository);
+        this.colocationJoinService = new ColocationJoinInteractor(colocationRepository, userRepository);
     }
 
 }

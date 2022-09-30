@@ -4,10 +4,10 @@ public class Main {
     public static void main(String[] args) {
 
         ApplicationConsole app = new ApplicationConsole(
-            Configuration.getConfiguration().colocationJoinBoundary,
+            Configuration.getConfiguration().colocationJoinService,
             Configuration.getConfiguration().listAllUserService,
-            Configuration.getConfiguration().listAllColocationBoundary,
-            Configuration.getConfiguration().createColocationBoundary,
+            Configuration.getConfiguration().listAllColocationService,
+            Configuration.getConfiguration().createColocationService,
             Configuration.getConfiguration().createUserService
         );
         app.start();

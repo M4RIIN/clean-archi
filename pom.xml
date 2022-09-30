@@ -19,6 +19,8 @@
         <module>database</module>
         <module>consoleApp/console-app</module>
         <module>consoleApp/manual-config</module>
+        <module>thymeleafApp/thymeleaf</module>
+        <module>config</module>
     </modules>
 
 

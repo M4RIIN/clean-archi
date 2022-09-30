@@ -11,7 +11,7 @@ import com.lagrange.usecase.user.createUser.UserCredential;
 
 import java.util.Objects;
 
-public class ColocationJoinInteractor implements ColocationJoinBoundary {
+public class ColocationJoinInteractor implements ColocationJoinService {
 
     private final ColocationRepository colocationRepository;
     private final UserRepository userRepository;

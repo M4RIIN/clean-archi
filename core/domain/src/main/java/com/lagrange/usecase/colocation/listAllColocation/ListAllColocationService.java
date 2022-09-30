@@ -6,6 +6,6 @@ import com.lagrange.entity.Colocation;
 
 import java.util.List;
 
-public interface ListAllColocationBoundary {
+public interface ListAllColocationService {
     List<Colocation> listAll();
 }

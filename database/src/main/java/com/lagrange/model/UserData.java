@@ -4,23 +4,21 @@ package com.lagrange.model;
 import com.lagrange.entity.User;
 
 public class UserData {
-    private int id;
     private String pseudo;
     private String password;
+    private String colocTag;
 
-    public UserData(int id, String pseudo, String password) {
-        this.id = id;
+
+    public UserData(String pseudo, String password, String colocTag) {
         this.pseudo = pseudo;
         this.password = password;
+        this.colocTag = colocTag;
     }
 
     public User toDto(){
         return new User(pseudo,password);
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getPseudo() {
         return pseudo;
@@ -29,4 +27,9 @@ public class UserData {
     public String getPassword() {
         return password;
     }
+
+    public String getColocTag() {
+        return colocTag;
+    }
+
 }

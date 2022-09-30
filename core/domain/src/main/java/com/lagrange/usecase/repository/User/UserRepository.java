@@ -1,6 +1,7 @@
 package com.lagrange.usecase.repository.User;
 
 import com.lagrange.entity.User;
+import com.lagrange.usecase.exception.createUser.UserDontFindException;
 import com.lagrange.usecase.user.createUser.UserCredential;
 
 import java.util.List;
@@ -12,5 +13,7 @@ public interface UserRepository {
 
     List<User> listAll();
 
-    User getUserByPseudoAndPassword(UserCredential user);
+    User getUserByPseudoAndPassword(UserCredential user) throws UserDontFindException;
+
+    void update(User user);
 }

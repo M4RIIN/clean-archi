@@ -5,7 +5,7 @@ import com.lagrange.usecase.repository.colocation.ColocationRepository;
 
 import java.util.List;
 
-public class ListAllColocationInteractor implements ListAllColocationBoundary {
+public class ListAllColocationInteractor implements ListAllColocationService {
 
     private final ColocationRepository colocationRepository;
 

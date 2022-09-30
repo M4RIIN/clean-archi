@@ -2,10 +2,10 @@ package com.lagrange;
 
 import com.lagrange.entity.Colocation;
 import com.lagrange.entity.User;
-import com.lagrange.usecase.colocation.createColocation.CreateColocationBoundary;
+import com.lagrange.usecase.colocation.createColocation.CreateColocationService;
 import com.lagrange.usecase.colocation.joinColocation.ColocationCredentials;
-import com.lagrange.usecase.colocation.joinColocation.ColocationJoinBoundary;
-import com.lagrange.usecase.colocation.listAllColocation.ListAllColocationBoundary;
+import com.lagrange.usecase.colocation.joinColocation.ColocationJoinService;
+import com.lagrange.usecase.colocation.listAllColocation.ListAllColocationService;
 import com.lagrange.usecase.user.createUser.CreateUserService;
 import com.lagrange.usecase.user.createUser.UserCredential;
 import com.lagrange.usecase.user.listAllUser.ListAllUserService;
@@ -14,17 +14,17 @@ import java.util.Scanner;
 
 public class ApplicationConsole {
 
-    private final ColocationJoinBoundary colocationJoinBoundary;
+    private final ColocationJoinService colocationJoinService;
     private final ListAllUserService listAllUserService;
-    private final ListAllColocationBoundary listAllColocationBoundary;
-    private final CreateColocationBoundary createColocationBoundary;
+    private final ListAllColocationService listAllColocationService;
+    private final CreateColocationService createColocationService;
     private final CreateUserService createUserService;
 
-    public ApplicationConsole(ColocationJoinBoundary colocationJoinBoundary, ListAllUserService listAllUserService, ListAllColocationBoundary listAllColocationBoundary, CreateColocationBoundary createColocationBoundary, CreateUserService createUserService) {
-        this.colocationJoinBoundary = colocationJoinBoundary;
+    public ApplicationConsole(ColocationJoinService colocationJoinService, ListAllUserService listAllUserService, ListAllColocationService listAllColocationService, CreateColocationService createColocationService, CreateUserService createUserService) {
+        this.colocationJoinService = colocationJoinService;
         this.listAllUserService = listAllUserService;
-        this.listAllColocationBoundary = listAllColocationBoundary;
-        this.createColocationBoundary = createColocationBoundary;
+        this.listAllColocationService = listAllColocationService;
+        this.createColocationService = createColocationService;
         this.createUserService = createUserService;
     }
 
@@ -71,7 +71,7 @@ public class ApplicationConsole {
     private void makeUserJoinColoc(String troisiemeEntreeColoc)  {
         String[] entries = troisiemeEntreeColoc.split(";");
         try {
-           colocationJoinBoundary.addUserToColocation(
+           colocationJoinService.addUserToColocation(
                     new UserCredential(entries[0],entries[1]),
                     new ColocationCredentials(entries[2],entries[3])
             );
@@ -87,7 +87,7 @@ public class ApplicationConsole {
     }
 
     private  void displayAllColocation() {
-        for(Colocation coloc : listAllColocationBoundary.listAll()){
+        for(Colocation coloc : listAllColocationService.listAll()){
             System.out.println(coloc.getPseudo() + " - " + coloc.getPassword() + " - #" + coloc.getTag());
         }
     }
@@ -95,7 +95,7 @@ public class ApplicationConsole {
     private  void insertColocation(String name, String pwd, String tag) {
         Colocation colocation = new Colocation(name, pwd, tag);
         try {
-            createColocationBoundary.create(colocation.getPseudo(), colocation.getPassword(), colocation.getTag());
+            createColocationService.create(colocation.getPseudo(), colocation.getPassword(), colocation.getTag());
 
         } catch (Exception e) {
             e.printStackTrace();
